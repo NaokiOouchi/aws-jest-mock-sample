@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Init DynamoDb.
+Parameters:
+  Env:
+    Type: String
+    AllowedValues:
+      - prod
+      - stg
+      - dev
+  SystemName:
+    Type: String
+    Default: Sample
+Resources:
+  SampleTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: SampleTable
+      AttributeDefinitions:
+        - AttributeName: SampleKey
+          AttributeType: S
+      KeySchema:
+        - AttributeName: SampleKey
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      Tags:
+        - Key: Name
+          Value: !Join ["-", [!Ref Env, !Ref SystemName, SampleTable]]
+Outputs:
+  SampleTableArn:
+    Value: !GetAtt SampleTable.Arn
