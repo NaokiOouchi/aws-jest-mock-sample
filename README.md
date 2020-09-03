@@ -1,0 +1,1 @@
+# aws-jest-mock-sample
